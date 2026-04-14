@@ -11,20 +11,20 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Создаем движок для работы с базой
+
 engine = create_async_engine(DATABASE_URL, echo=True)
 
-# Фабрика сессий для запросов
+
 async_session = sessionmaker(
     engine, 
     class_=AsyncSession, 
     expire_on_commit=False
 )
 
-# --- МОДЕЛИ ДАННЫХ ---
+
 
 class User(SQLModel, table=True):
-    __tablename__ = "users" # Имя таблицы в базе данных
+    __tablename__ = "users" 
     
     id: Optional[int] = Field(default=None, primary_key=True)
     email: str = Field(unique=True, index=True, nullable=False)
@@ -32,12 +32,12 @@ class User(SQLModel, table=True):
     username: Optional[str] = Field(default=None, index=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
-    # Связь: один пользователь может иметь много задач
-    # back_populates указывает на имя поля в классе Task
+  
+    
     tasks: List["Task"] = Relationship(back_populates="owner")
 
 class Task(SQLModel, table=True):
-    __tablename__ = "task" # Можно оставить так или изменить на "tasks"
+    __tablename__ = "task" 
     
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(nullable=False)
@@ -46,23 +46,19 @@ class Task(SQLModel, table=True):
     priority: str = Field(default="medium")
     deadline: Optional[str] = Field(default=None, nullable=True)
 
-    # Внешний ключ: ссылается на id в таблице users
+
     owner_id: int = Field(foreign_key="users.id", nullable=False)
     
-    # СВЯЗЬ: указываем на владельца задачи
-    # back_populates указывает на имя поля в классе User
+  
     owner: Optional[User] = Relationship(back_populates="tasks")
 
-# --- ФУНКЦИИ ИНИЦИАЛИЗАЦИИ ---
 
-# --- ФУНКЦИИ ИНИЦИАЛИЗАЦИИ ---
 
 async def init_db():
     async with engine.begin() as conn:
-        # УБРАЛИ: DROP TABLE IF EXISTS...
+      
         
-        # SQLModel.metadata.create_all создаст таблицы, только если их нет в базе.
-        # Если таблицы уже существуют, он их просто пропустит и данные сохранятся.
+       
         await conn.run_sync(SQLModel.metadata.create_all)
         
     print("✅ База данных SYNAPSE готова (существующие данные сохранены).")
