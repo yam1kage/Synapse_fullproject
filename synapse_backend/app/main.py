@@ -15,7 +15,9 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Synapse Kanban API",
     version="2.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
+    docs_url=None,
+    redoc_url=None
 )
 
 
