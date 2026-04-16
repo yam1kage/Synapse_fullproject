@@ -1,13 +1,13 @@
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-// --- ТИПЫ ДАННЫХ (БЕЗ РОЛЕЙ И НАЗНАЧЕНИЙ) ---
+
 export interface Task {
   id: number;
   name: string;
   description: string;
   status: string;
   priority: string;
-  deadline?: string; // Наши любимые дедлайны остаются
+  deadline?: string; 
 }
 
 export interface TaskCreate {
@@ -18,7 +18,7 @@ export interface TaskCreate {
   deadline?: string;
 }
 
-// --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
+
 export const getToken = () => typeof window !== "undefined" ? localStorage.getItem("token") : null;
 export const isAuthenticated = () => !!getToken();
 
@@ -29,9 +29,7 @@ export const logout = () => {
   }
 };
 
-/**
- * Универсальный обработчик ошибок FastAPI
- */
+
 async function handleResponseError(response: Response, defaultMsg: string) {
   if (response.status === 401) logout();
   let message = defaultMsg;
