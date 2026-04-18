@@ -7,7 +7,7 @@ class TaskRepository:
     @classmethod
     async def add_one(cls, data: STaskAdd, owner_email: str) -> Optional[Task]:
         async with async_session() as session:
-            # 1. Находим пользователя по email
+           
             user_query = select(User).where(User.email == owner_email)
             result = await session.execute(user_query)
             user = result.scalar_one_or_none()

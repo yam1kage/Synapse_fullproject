@@ -22,7 +22,7 @@ async def register(user_data: User, session: AsyncSession = Depends(get_session)
     if existing_user:
         raise HTTPException(status_code=400, detail="Email уже занят")
 
-    # 2. Хеш пароль
+    
     user_data.hashed_password = hash_password(user_data.hashed_password)
     
     
