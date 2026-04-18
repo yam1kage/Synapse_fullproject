@@ -20,7 +20,7 @@ export default function InboxPage() {
           return
         }
 
-        const response = await fetch('http://172.20.10.2:8000/tasks', {
+        const response = await fetch('http://172.20.10.2:8000/tasks', { //need change 
           headers: { 
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
