@@ -9,7 +9,7 @@ import uvicorn
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_db()
-    print("🚀 База Synapse синхронизирована (версия без ролей)")
+    print("ready")
     yield
 
 app = FastAPI(
