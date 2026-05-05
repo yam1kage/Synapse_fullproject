@@ -1,7 +1,7 @@
 ### Synapse — Cloud Project Management System
 
 Synapse is a cloud-based project management platform designed specifically for coordinating student teams. It provides a streamlined workspace to visualize workflows and manage tasks efficiently using the Kanban methodology.
-🚀 Key Features
+ Key Features
 
     Interactive Kanban Board: A dynamic interface where tasks are represented as cards and moved through different lifecycle stages.
 
